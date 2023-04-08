@@ -1,0 +1,19 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS.Views.DataEntry"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="POS.Views.DataEntry.Qts"
+        mc:Ignorable="d"
+        Title="Qts" Height="173" Width="342" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Background="#FFFFFDE7">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110*"/>
+            <ColumnDefinition Width="61*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" x:Name="NameTextBox" PreviewTextInput="price_PreviewTextInput" Text="{Binding qts, UpdateSourceTrigger=PropertyChanged}" FontSize="50" materialDesign:HintAssist.Hint="Quantité" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="285" FontFamily="Bahnschrift Condensed" Margin="26,10,0,10" Background="White" FontWeight="Bold" KeyUp="NameTextBox_KeyUp" Grid.ColumnSpan="2"/>
+
+    </Grid>
+</Window>

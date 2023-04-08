@@ -1,0 +1,22 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POS.Views.DataInfo"
+        xmlns:PdfViewer="clr-namespace:Syncfusion.Windows.PdfViewer;assembly=Syncfusion.PdfViewer.WPF" x:Class="POS.Views.DataInfo.PdfPrint"
+        mc:Ignorable="d"
+        Title="PdfPrint" Height="738" Width="1147">
+    <Grid>
+        <Button HorizontalContentAlignment="Left" Content="Unité" FontSize="30" HorizontalAlignment="Left" Margin="142,132,0,0" VerticalAlignment="Top" Width="238" Height="91" Background="#FF5873BA" BorderBrush="#FF11182A" FontFamily="Bahnschrift Condensed" Cursor="Hand"/>
+        <Button FontSize="28" x:Name="exit_btn" Margin="988,106,92,0" VerticalAlignment="Top" Foreground="#FF334979" BorderBrush="#FF6B97FA" Height="54" Background="#FFFDFDFF" Cursor="Hand">
+
+            <Image Source="/Ressources/refresh.png" OpacityMask="#FFD07D7D">
+                <Image.Effect>
+                    <DropShadowEffect/>
+                </Image.Effect>
+            </Image>
+
+        </Button>
+    </Grid>
+</Window>

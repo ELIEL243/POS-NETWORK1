@@ -1,0 +1,225 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:POS.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:viewmodel="clr-namespace:POS.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:PurchaseViewModel}" x:Class="POS.Views.UCStock"
+             mc:Ignorable="d" 
+             d:DesignHeight="728" Width="900">
+    <Grid Background="White" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="109*"/>
+            <RowDefinition Height="73*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="550*"/>
+            <ColumnDefinition Width="19*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Height="641" Margin="0,59,436,0" Stroke="White" VerticalAlignment="Top" Fill="White" RadiusX="2" RadiusY="2" HorizontalAlignment="Right" Width="420" Grid.RowSpan="2"/>
+
+
+        <Label HorizontalContentAlignment="Center" Content="Stock" FontSize="32" VerticalContentAlignment="Center" Margin="294,15,280,0" VerticalAlignment="Top" Height="52" FontFamily="Bahnschrift Condensed" FontWeight="Bold" Foreground="#FF3B4F81"/>
+        <DataGrid x:Name="dt" SelectedItem="{Binding selected_item}" AutoGenerateColumns="False" ItemsSource="{Binding items}" HorizontalContentAlignment="Left" Margin="14,177,0,12" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFCCD5F0" FontFamily="Bahnschrift Condensed" FontSize="18" HorizontalAlignment="Left" Width="196" FontWeight="Normal" Grid.RowSpan="2">
+            <DataGrid.CurrentCell>
+                <DataGridCellInfo/>
+            </DataGrid.CurrentCell>
+            <DataGrid.Effect>
+                <DropShadowEffect/>
+            </DataGrid.Effect>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#FF9CCC65" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="FontSize" Value="22"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                    <Setter Property="Height" Value="40"/>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <materialDesign:DataGridTextColumn Binding="{Binding Description}" Header="Desc"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Binding="{Binding Qts}" Width="50" Header="Qts"></materialDesign:DataGridTextColumn>
+            </DataGrid.Columns>
+
+            <DataGrid.InputBindings>
+                <KeyBinding Command="{Binding SelectItem}" Key="Enter"></KeyBinding>
+            </DataGrid.InputBindings>
+        </DataGrid>
+
+        <TextBox x:Name="NameTextBox" Text="{Binding search_item, UpdateSourceTrigger=PropertyChanged}" FontSize="25" materialDesign:HintAssist.Hint="Recherche..."  Height="45" Margin="21,116,0,0" HorizontalAlignment="Left" Width="134" VerticalAlignment="Top" FontFamily="Bahnschrift Light Condensed" Background="White">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding search_box}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <DataGrid x:Name="dt_Copy" SelectedItem="{Binding selected_purchase,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" ItemsSource="{Binding unpurchases}" HorizontalContentAlignment="Left" Margin="229,179,0,10" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFCCD5F0" FontFamily="Bahnschrift Condensed" FontSize="18" HorizontalAlignment="Left" Width="200" FontWeight="Normal" Grid.RowSpan="2">
+            <DataGrid.Effect>
+                <DropShadowEffect/>
+            </DataGrid.Effect>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#FFFFB74D" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="FontSize" Value="22"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                    <Setter Property="Height" Value="40"/>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <materialDesign:DataGridTextColumn Binding="{Binding Item}" Header="Desc"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Binding="{Binding Qts}" Header="Qts"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Binding="{Binding Purchase_price}" Header="Total"></materialDesign:DataGridTextColumn>
+                <DataGridTemplateColumn Header="Action" Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="/Ressources/delete.png" OpacityMask="#FFD07D7D" Stretch="Uniform">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.del_btn}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                                <Image.Effect>
+                                    <DropShadowEffect/>
+                                </Image.Effect>
+
+
+                            </Image>
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+            <DataGrid.InputBindings>
+                <KeyBinding Command="{Binding edit_btn}" Key="Enter"></KeyBinding>
+            </DataGrid.InputBindings>
+        </DataGrid>
+        <Label HorizontalContentAlignment="Center" Content="Nouvelle Entrée" FontSize="32" VerticalContentAlignment="Center" Margin="58,59,0,0" VerticalAlignment="Top" Height="52" FontFamily="Bahnschrift Condensed" FontWeight="Bold" Foreground="#FF3B4F81" HorizontalAlignment="Left" Width="288"/>
+
+        <Rectangle Height="659" Margin="462,63,0,0" Stroke="White" VerticalAlignment="Top" Fill="White" HorizontalAlignment="Left" Width="454" Grid.RowSpan="2"/>
+        <Label HorizontalContentAlignment="Center" Content="Entrées" FontSize="32" VerticalContentAlignment="Center" Margin="572,59,0,0" VerticalAlignment="Top" Height="52" FontFamily="Bahnschrift Condensed" FontWeight="Bold" Foreground="#FF3B4F81" HorizontalAlignment="Left" Width="218"/>
+        <DataGrid x:Name="dt_Copy1" AutoGenerateColumns="False" SelectedItem="{Binding selected_purchase}" ItemsSource="{Binding purchases}" HorizontalContentAlignment="Left" Margin="461,177,0,12" IsReadOnly="True" ColumnWidth="*" AlternatingRowBackground="#FFCCD5F0" FontFamily="Bahnschrift Condensed" FontSize="18" SelectedIndex="0" Grid.RowSpan="2" HorizontalAlignment="Left" Width="430">
+            <DataGrid.Effect>
+                <DropShadowEffect/>
+            </DataGrid.Effect>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#FF3B4F81" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="FontSize" Value="22"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                    <Setter Property="Height" Value="40"/>
+                </Style>
+            </DataGrid.CellStyle>
+
+            <DataGrid.Columns>
+                <materialDesign:DataGridTextColumn Binding="{Binding No}" Header="No"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Binding="{Binding Item}" Header="Desc"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Binding="{Binding Qts}" Header="Qts"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Binding="{Binding Purchase_price}" Header="Total"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Binding="{Binding Date}" Header="Date"></materialDesign:DataGridTextColumn>
+                <DataGridTemplateColumn Header="action">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="/Ressources/delete.png" OpacityMask="#FFD07D7D" Stretch="Uniform">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.del_purchase}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                                <Image.Effect>
+                                    <DropShadowEffect/>
+                                </Image.Effect>
+
+
+                            </Image>
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+            <DataGrid.InputBindings>
+                <KeyBinding Command="{Binding del_purchase}" Key="Delete"></KeyBinding>
+            </DataGrid.InputBindings>
+        </DataGrid>
+        <DatePicker
+            PreviewTextInput="date_PreviewTextInput"
+  Width="110"
+  materialDesign:HintAssist.Hint="Choisir une date"
+  materialDesign:HintAssist.HelperText=""
+  Style="{StaticResource MaterialDesignOutlinedDatePicker}" Text="{Binding date1, UpdateSourceTrigger=PropertyChanged, StringFormat='dd MM yyyy'}" SelectedDate="{Binding date1}" Margin="491,107,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedDateChanged">
+                    <i:InvokeCommandAction Command="{Binding search_date}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+
+
+        </DatePicker>
+        <DatePicker
+            Width="115"
+            materialDesign:HintAssist.Hint="Choisir une date"
+            materialDesign:HintAssist.HelperText=""
+            Style="{StaticResource MaterialDesignOutlinedDatePicker}" SelectedDate="{Binding date2}" Text="{Binding date2, UpdateSourceTrigger=PropertyChanged}" Margin="637,107,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsTodayHighlighted="True" RenderTransformOrigin="0.037,0.675">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedDateChanged">
+                    <i:InvokeCommandAction Command="{Binding search_date}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+        </DatePicker>
+        <Label HorizontalContentAlignment="Center" Content="Du" FontSize="22" VerticalContentAlignment="Center" Margin="462,109,0,0" VerticalAlignment="Top" Height="52" FontFamily="Bahnschrift Condensed" FontWeight="Bold" Foreground="#FF3B4F81" HorizontalAlignment="Left" Width="28" RenderTransformOrigin="1.423,0.503"/>
+        <Label HorizontalContentAlignment="Center" Content="Au" FontSize="22" VerticalContentAlignment="Center" Margin="606,108,0,0" VerticalAlignment="Top" Height="52" FontFamily="Bahnschrift Condensed" FontWeight="Bold" Foreground="#FF3B4F81" HorizontalAlignment="Left" Width="26" RenderTransformOrigin="2.278,0.606"/>
+        <Button FontSize="28" HorizontalAlignment="Left" Margin="812,105,0,0" VerticalAlignment="Top" Width="50" Foreground="#FF334979" BorderBrush="#FF6B97FA" Height="54" Background="#FFFDFDFF" Command="{Binding print_btn}" Cursor="Hand">
+
+            <Image Source="/Ressources/printer.png" OpacityMask="#FFD07D7D">
+                <Image.Effect>
+                    <DropShadowEffect/>
+                </Image.Effect>
+            </Image>
+
+        </Button>
+        <Button Command="{Binding complete_btn}" Content="valider" FontSize="22" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="210,113,0,0" Background="#FF3B4F81" Width="136" Height="47" FontFamily="Bahnschrift Condensed"/>
+        <Button FontSize="28" Margin="757,105,0,0" VerticalAlignment="Top" Foreground="#FF334979" BorderBrush="#FF6B97FA" Height="54" Width="50" Background="#FFFDFDFF" Command="{Binding ref_btn}" Cursor="Hand" HorizontalAlignment="Left">
+
+            <Image Source="/Ressources/refresh.png" OpacityMask="#FFD07D7D">
+                <Image.Effect>
+                    <DropShadowEffect/>
+                </Image.Effect>
+            </Image>
+
+        </Button>
+        <Label HorizontalContentAlignment="Right" Content="{Binding total_purchase, UpdateSourceTrigger=PropertyChanged}" FontSize="38" VerticalContentAlignment="Center" Margin="909,4,0,0" VerticalAlignment="Top" Height="52" FontFamily="Bahnschrift Condensed" FontWeight="Bold" Foreground="#FF3B4F81" HorizontalAlignment="Left" Width="218" Grid.ColumnSpan="2"/>
+
+
+
+    </Grid>
+</UserControl>
